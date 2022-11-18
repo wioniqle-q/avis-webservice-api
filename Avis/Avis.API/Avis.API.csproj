@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="11.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+    <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="0.17.0" />
+    <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders.TagHelpers" Version="0.17.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Avis.API.DataContracts\Avis.API.DataContracts.csproj" />
+    <ProjectReference Include="..\Avis.Common\Avis.Common.csproj" />
+    <ProjectReference Include="..\Avis.DB\Avis.DB.csproj" />
+    <ProjectReference Include="..\Avis.Features\Avis.Features.csproj" />
+    <ProjectReference Include="..\Avis.Services.DataConsultion\Avis.Services.DataConsultion.csproj" />
+    <ProjectReference Include="..\Avis.Services.DT\Avis.Services.DT.csproj" />
+    <ProjectReference Include="..\Avis.Services.SecurityLayer\Avis.Services.SecurityLayer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Avis.API.Controllers.V1" />
+    <Using Include="Avis.Common.Middlewares" />
+    <Using Include="Avis.DB.MongoDB" />
+    <Using Include="Avis.Features.Features.Commands.UserOrganizationCommand.CreateOrganization" />
+    <Using Include="Avis.Services.DataConsultion.Consultion" />
+    <Using Include="Avis.Services.SecurityLayer.Policies" />
+    <Using Include="MediatR" />
+    <Using Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <Using Include="Microsoft.AspNetCore.Mvc" />
+    <Using Include="Microsoft.AspNetCore.Mvc.Versioning" />
+    <Using Include="Microsoft.IdentityModel.Tokens" />
+    <Using Include="System.Text" />
+    <Using Include="System.Threading.RateLimiting" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Avis.Features": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:52297;http://localhost:52309"
+    }
+  }
+}

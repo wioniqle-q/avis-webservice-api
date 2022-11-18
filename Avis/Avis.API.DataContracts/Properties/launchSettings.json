@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Avis.API.DataContracts": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:52303;http://localhost:52313"
+    }
+  }
+}

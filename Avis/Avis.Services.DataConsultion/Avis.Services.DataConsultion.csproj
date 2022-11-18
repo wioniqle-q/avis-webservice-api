@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.18.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Avis.DB\Avis.DB.csproj" />
+    <ProjectReference Include="..\Avis.Services.Contracts\Avis.Services.Contracts.csproj" />
+    <ProjectReference Include="..\Avis.Services.OrganizationModel\Avis.Services.OrganizationModel.csproj" />
+  </ItemGroup>
+
+</Project>
