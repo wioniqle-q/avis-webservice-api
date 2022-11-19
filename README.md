@@ -11,27 +11,21 @@
 
 ```js 
 POST 
-api.avis.com/account
+avis.com/api/v1/account/{parameters}
 
 {
 	body: {
-		name: "John",
-		mail: "john@tester.com"
-		username: "testuser",
-		password: "testuserpassword",
-		org: "organization",
-		title: "super cool developer"
+		Mail: "john@tester.com"
+		Username: "testuser",
+		Password: "testuserpassword"
 	}
 }
 
 * API endpoint: api.avis.com/
 
-* name: Your Real Name
-* mail: Your e-Mail
-* username: Your account's username
-* password: Your account's password
-* org: Your Organization / Enterprise / School 
-* title: Your title in your organization
+* Mail: Your e-Mail
+* Username: Your account's username
+* Password: Your account's password
 ```
 
 **Example Response:** 
@@ -53,28 +47,17 @@ api.avis.com/account
  - [x] DotNet 7.0
  - [x] ASP.NET
  - [x] MongoDB
+ - [x] CQRS
  
 ## Features
   
  ### Account
  - [x] Create an account
  - [x] Edit your account
- - [x] Delete your account
-  
-### Lecture Notes
-  - [x] Upload up to 10 MB Files
-  - [x] Look up to uploaded Documents
-  
-### Cheats 
-  - [x] Minecraft Cheat 1 
-  - [x] Minecraft Cheat 2
-  - [x] Minecraft Cheat 3 
-
-
-### Video
-  - [x] Upload up to 10 MB Videos
-  - [x] Look up to uploaded videos
-
+ - [x] Deactive/Active your account
+ 
+ ### User
+ - [x] Login Account
 
 ## Resources
 
