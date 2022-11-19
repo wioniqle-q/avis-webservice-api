@@ -15,15 +15,15 @@ avis.com/api/v1/account/{parameters}
 
 {
 	body: {
-		Mail: "john@tester.com"
-		Username: "testuser",
-		Password: "testuserpassword"
+		"Mail": "john@tester.com"
+		"Username": "testuser",
+		"Password": "testuserpassword"
 	}
 }
 
 * API endpoint: api.avis.com/
 
-* Mail: Your e-Mail
+* Mail: Your e-mail
 * Username: Your account's username
 * Password: Your account's password
 ```
