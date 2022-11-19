@@ -38,7 +38,7 @@ api.avis.com/account
 
 
 ```js
-* Response Type: String | Error<typless>
+* Response Type: Object | Error<typless>
 
 {
   success: true,
