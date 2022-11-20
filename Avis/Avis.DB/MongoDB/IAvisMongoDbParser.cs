@@ -5,7 +5,7 @@ namespace Avis.DB.MongoDB;
 
 public interface IAvisMongoDbParser
 {
-    #region First/FirstOrDefault
+    #region FirstOrDefault
     Task<T> FirstOrDefaultAsync<T>([NotNull] IQueryable<T> queryable, CancellationToken cancellationToken = default);
     #endregion 
 }

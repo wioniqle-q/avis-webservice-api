@@ -15,26 +15,13 @@ public class CreateOrganizationCommandHandler : IRequestHandler<CreateOrganizati
 
     public virtual async Task<CreateOrganizationCommandResponse> Handle(CreateOrganizationCommandRequest request, CancellationToken cancellationToken)
     {
-        var organization = new OrganizationUser
-        {
-            Name = request.Name,
-            Password = request.Password
-        };
+        var organization = new OrganizationUser(request.Name, request.Password);
 
-        var organizationUser = await accountConsultion.OrganizationUserFindAsync(organization);
-        if (organizationUser is not null)
-        {
-            return new CreateOrganizationCommandResponse
-            {
-                Result = "Organization already exists"
-            };
-        }
-
-        await accountConsultion.OrganizationUserCreateAsync(organization);
+        var organizationUser = await accountConsultion.OrganizationUserCreateAsync(organization, cancellationToken);
 
         return await Task.FromResult(new CreateOrganizationCommandResponse
         {
-            Result = "Organization created successfully"
+            Result = await organizationUser
         });
     }
 }

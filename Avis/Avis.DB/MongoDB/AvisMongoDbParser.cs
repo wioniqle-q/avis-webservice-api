@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Avis.DB.MongoDB;
 
-public class AvisMongoDbParser : IAvisMongoDbParser
+public abstract class AvisMongoDbParser : IAvisMongoDbParser
 {
     protected virtual IMongoQueryable<T> GetMongoQueryable<T>(IQueryable<T> queryable)
     {

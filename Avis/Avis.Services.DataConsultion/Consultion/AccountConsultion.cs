@@ -1,5 +1,6 @@
 ﻿using Avis.DB.MongoDB;
 using Avis.Services.OrganizationModel;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
@@ -7,37 +8,28 @@ namespace Avis.Services.DataConsultion.Consultion;
 
 public class AccountConsultion : AvisMongoDbContext
 {
-    public virtual async Task<OrganizationUser> OrganizationUserFindAsync(OrganizationUser organizationUser)
+    public virtual async Task<OrganizationUser> OrganizationUserFindAsync(OrganizationUser organizationUser, CancellationToken cancellationToken = default)
     {
-        var collection = GetCollection<OrganizationUser>(GetDatabaseName());
-        var result = await collection.AsQueryable().Where(x => x.Name == organizationUser.Name).FirstOrDefaultAsync();
-        return result;
+        return await GetCollection<OrganizationUser>(GetDatabaseName()).AsQueryable().OrderBy(x => x.Name).FirstOrDefaultAsync(x => x.Name == organizationUser.Name, cancellationToken);
     }
 
-    public virtual async Task<Task<string>> OrganizationUserUpdateAsync(OrganizationUser organizationUserProperties)
+    public virtual async Task<Task<string>> OrganizationUserUpdateAsync(OrganizationUser organizationUserProperties, CancellationToken cancellationToken = default)
     {
-        var collection = GetCollection<OrganizationUser>(GetDatabaseName());
         var result = await this.OrganizationUserFindAsync(organizationUserProperties);
 
-        if (result is null)
+        if (result is null || result.IsDeleted == true && result.IsActive == false)
         {
             return Task.FromResult("OrganizationUser not found");
         }
 
-        if (result.IsDeleted == true && result.IsActive == false)
-        {
-            return Task.FromResult("You cannot update a deleted OrganizationUser");
-        }
-
         var newProperty = Builders<OrganizationUser>.Update.Set(x => x.Password, organizationUserProperties.Password);
-        await collection.UpdateOneAsync(x => x.Name == result.Name, newProperty);
+        await GetCollection<OrganizationUser>(GetDatabaseName()).UpdateOneAsync(x => x.Name == organizationUserProperties.Name, newProperty, cancellationToken: cancellationToken);
 
         return Task.FromResult("OrganizationUser password updated");
     }
 
-    public virtual async Task<Task<string>> OrganizationUserCreateAsync(OrganizationUser organizationUserProperties)
+    public virtual async Task<Task<string>> OrganizationUserCreateAsync(OrganizationUser organizationUserProperties, CancellationToken cancellationToken = default)
     {
-        var collection = GetCollection<OrganizationUser>(GetDatabaseName());
         var result = await this.OrganizationUserFindAsync(organizationUserProperties);
 
         if (result is not null)
@@ -45,14 +37,13 @@ public class AccountConsultion : AvisMongoDbContext
             return Task.FromResult("OrganizationUser already exists");
         }
 
-        await collection.InsertOneAsync(organizationUserProperties);
+        await GetCollection<OrganizationUser>(GetDatabaseName()).InsertOneAsync(organizationUserProperties, cancellationToken: cancellationToken);
 
         return Task.FromResult("OrganizationUser created");
     }
 
-    public virtual async Task<Task<string>> OrganizationUserActivateAsync(OrganizationUser organizationUserProperties)
+    public virtual async Task<Task<string>> OrganizationUserActivateAsync(OrganizationUser organizationUserProperties, CancellationToken cancellationToken = default)
     {
-        var collection = GetCollection<OrganizationUser>(GetDatabaseName());
         var result = await this.OrganizationUserFindAsync(organizationUserProperties);
 
         if (result is null)
@@ -66,14 +57,13 @@ public class AccountConsultion : AvisMongoDbContext
         }
 
         var newProperty = Builders<OrganizationUser>.Update.Set(x => x.IsActive, true).Set(x => x.IsDeleted, false);
-        await collection.UpdateOneAsync(x => x.Name == result.Name, newProperty);
+        await GetCollection<OrganizationUser>(GetDatabaseName()).UpdateOneAsync(x => x.Name == result.Name, newProperty, cancellationToken: cancellationToken);
 
         return Task.FromResult("OrganizationUser activated");
     }
 
-    public virtual async Task<Task<string>> OrganizationUserDeactivateAsync(OrganizationUser organizationUserProperties)
+    public virtual async Task<Task<string>> OrganizationUserDeactivateAsync(OrganizationUser organizationUserProperties, CancellationToken cancellationToken = default)
     {
-        var collection = GetCollection<OrganizationUser>(GetDatabaseName());
         var result = await this.OrganizationUserFindAsync(organizationUserProperties);
 
         if (result is null)
@@ -83,27 +73,13 @@ public class AccountConsultion : AvisMongoDbContext
 
         if (result.IsActive == false)
         {
-            return Task.FromResult("OrganizationUser is already deactivated");
+            return Task.FromResult("OrganizationUser is already inactive");
         }
 
         var newProperty = Builders<OrganizationUser>.Update.Set(x => x.IsActive, false).Set(x => x.IsDeleted, true);
-        await collection.UpdateOneAsync(x => x.Name == result.Name, newProperty);
+        await GetCollection<OrganizationUser>(GetDatabaseName()).UpdateOneAsync(x => x.Name == result.Name, newProperty, cancellationToken: cancellationToken);
 
-        return Task.FromResult("OrganizationUser deactivated");
-    }
-
-    public virtual async Task<List<OrganizationUser>> OrganizationUserGetAllAsync()
-    {
-        var collection = GetCollection<OrganizationUser>(GetDatabaseName());
-        var result = await collection.AsQueryable().ToListAsync();
-        return result;
-    }
-
-    public virtual async Task<List<OrganizationUser>> OrganizationUserGetAllByNameAsync(OrganizationUser organization)
-    {
-        var collection = GetCollection<OrganizationUser>(GetDatabaseName());
-        var result = await collection.AsQueryable().Where(x => x.Name == organization.Name).ToListAsync();
-        return result;
+        return Task.FromResult("OrganizationUser inactived");
     }
 
     protected virtual IMongoQueryable<T> GetMongoQueryable<T>(IQueryable<T> queryable)
