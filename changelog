@@ -1,0 +1,16 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [Released]
+
+### Added 
+- Added a registration system and an entry system was introduced.
+
+### Changed
+- Code optimizations were made.
+- Unnecessary modules removed.
+- Global module library used.
+- Encryption algorithms were improved.
+
+## [1.1.0] - 2022-11-25
