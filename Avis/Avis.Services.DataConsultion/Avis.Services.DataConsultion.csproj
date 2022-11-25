@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +13,20 @@
   <ItemGroup>
     <ProjectReference Include="..\Avis.DB\Avis.DB.csproj" />
     <ProjectReference Include="..\Avis.Services.Contracts\Avis.Services.Contracts.csproj" />
+    <ProjectReference Include="..\Avis.Services.DT\Avis.Services.DT.csproj" />
     <ProjectReference Include="..\Avis.Services.OrganizationModel\Avis.Services.OrganizationModel.csproj" />
+    <ProjectReference Include="..\Avis.Services.Protection\Avis.Services.Protection.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include=" Avis.Services.DT.DT.Algorithm" />
+    <Using Include=" Avis.Services.OrganizationModel" />
+    <Using Include="Avis.DB.MongoDB" />
+    <Using Include="Avis.Services.DT.DT.PageGroup" />
+    <Using Include="Avis.Services.Protection.HashAlgorithm" />
+    <Using Include="Avis.Services.Protection.HashAlgorithmPageGroup" />
+    <Using Include="MongoDB.Driver" />
+    <Using Include="MongoDB.Driver.Linq" />
   </ItemGroup>
 
 </Project>

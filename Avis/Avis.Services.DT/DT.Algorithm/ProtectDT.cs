@@ -13,7 +13,7 @@ public class ProtectDT : IDT<string>
         byte[] GetBytes = Encoding.Unicode.GetBytes(value);
         using Aes aes = Aes.Create();
 
-        Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(encryptionKey, new byte[]
+        Rfc2898DeriveBytes rfc2898DeriveBytes = new(encryptionKey, new byte[]
         {
           0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76
         })
@@ -24,8 +24,8 @@ public class ProtectDT : IDT<string>
         aes.Key = rfc2898DeriveBytes.GetBytes(32);
         aes.IV = rfc2898DeriveBytes.GetBytes(16);
 
-        using MemoryStream memoryStream = new MemoryStream();
-        using CryptoStream cryptoStream = new CryptoStream(memoryStream, aes.CreateEncryptor(), CryptoStreamMode.Write);
+        using MemoryStream memoryStream = new();
+        using CryptoStream cryptoStream = new(memoryStream, aes.CreateEncryptor(), CryptoStreamMode.Write);
         cryptoStream.Write(GetBytes, 0, GetBytes.Length);
         cryptoStream.FlushFinalBlock();
         cryptoStream.Close();
@@ -39,7 +39,7 @@ public class ProtectDT : IDT<string>
         byte[] array = Convert.FromBase64String(value.Replace(" ", "+"));
         using Aes aes = Aes.Create();
 
-        Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(encryptionKey, new byte[]
+        Rfc2898DeriveBytes rfc2898DeriveBytes = new(encryptionKey, new byte[]
         {
             0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76
         })
@@ -50,8 +50,8 @@ public class ProtectDT : IDT<string>
         aes.Key = rfc2898DeriveBytes.GetBytes(32);
         aes.IV = rfc2898DeriveBytes.GetBytes(16);
  
-        using MemoryStream memoryStream = new MemoryStream();
-        using CryptoStream cryptoStream = new CryptoStream(memoryStream, aes.CreateDecryptor(), CryptoStreamMode.Write);
+        using MemoryStream memoryStream = new();
+        using CryptoStream cryptoStream = new(memoryStream, aes.CreateDecryptor(), CryptoStreamMode.Write);
         cryptoStream.Write(array, 0, array.Length);
         cryptoStream.FlushFinalBlock();
         cryptoStream.Close();

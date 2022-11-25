@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <NoWin32Manifest>true</NoWin32Manifest>
@@ -44,6 +44,7 @@
     <Using Include="Avis.DB.MongoDB" />
     <Using Include="Avis.Features.Features.Commands.UserOrganizationCommand.CreateOrganization" />
     <Using Include="Avis.Services.DataConsultion.Consultion" />
+    <Using Include="Avis.Services.OrganizationModel" />
     <Using Include="Avis.Services.SecurityLayer.Policies" />
     <Using Include="MediatR" />
     <Using Include="Microsoft.AspNetCore.Authentication.JwtBearer" />

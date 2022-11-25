@@ -1,10 +1,4 @@
-﻿using Avis.DB.MongoDB;
-using Avis.Services.OrganizationModel;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using MongoDB.Driver.Linq;
-
-namespace Avis.Services.DataConsultion.Consultion;
+﻿namespace Avis.Services.DataConsultion.Consultion;
 
 public class AccountConsultion : AvisMongoDbContext
 {
@@ -42,6 +36,7 @@ public class AccountConsultion : AvisMongoDbContext
         return Task.FromResult("OrganizationUser created");
     }
 
+
     public virtual async Task<Task<string>> OrganizationUserActivateAsync(OrganizationUser organizationUserProperties, CancellationToken cancellationToken = default)
     {
         var result = await this.OrganizationUserFindAsync(organizationUserProperties);
@@ -65,6 +60,7 @@ public class AccountConsultion : AvisMongoDbContext
     public virtual async Task<Task<string>> OrganizationUserDeactivateAsync(OrganizationUser organizationUserProperties, CancellationToken cancellationToken = default)
     {
         var result = await this.OrganizationUserFindAsync(organizationUserProperties);
+
 
         if (result is null)
         {
