@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+### Added
+- Added new security improvements code.
+
+### Changed
+- AuthenticateConsultion and AccountConsultion is changed.
+
+### Fixed
+- Bug and NoSQL injection fixed.
+
+## [1.1.1] - 2022-11-29
+-------------------------------------------------------------------
+
 ### Added 
 - Added a registration system and an entry system was introduced.
 

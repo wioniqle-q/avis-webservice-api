@@ -1,5 +1,7 @@
 using Avis.Features.Features.Commands.AuthenticateCommand.Authenticate;
 using Avis.Services.DT.DT.Algorithm;
+using Avis.Services.Protection.HashAlgorithm;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(options =>
@@ -44,6 +46,7 @@ builder.Services.AddRateLimiter(options =>
     );
 });
 
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddSingleton<IAvisMongoDbContext, AvisMongoDbContext>();
 builder.Services.AddSingleton<AccountConsultion>();

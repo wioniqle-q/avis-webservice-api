@@ -1,4 +1,6 @@
-﻿namespace Avis.Services.DataConsultion.Consultion;
+﻿using AutoMapper;
+
+namespace Avis.Services.DataConsultion.Consultion;
 
 public class AccountConsultion : AvisMongoDbContext
 {
@@ -16,30 +18,37 @@ public class AccountConsultion : AvisMongoDbContext
             return Task.FromResult("OrganizationUser not found");
         }
 
-        var newProperty = Builders<OrganizationUser>.Update.Set(x => x.Password, organizationUserProperties.Password);
+        var generateSalt = HashLoader.HashCreate();
+        var HashedPassword = HashLoader.HashCreate(organizationUserProperties.Password, generateSalt);
+        var organizationUser = new OrganizationUser(String.Empty, HashedPassword);
+
+        var newProperty = Builders<OrganizationUser>.Update.Set(x => x.Password, organizationUser.Password);
         await GetCollection<OrganizationUser>(GetDatabaseName()).UpdateOneAsync(x => x.Name == organizationUserProperties.Name, newProperty, cancellationToken: cancellationToken);
 
-        return Task.FromResult("OrganizationUser password updated");
+        return Task.FromResult("OrganizationUser password updated, new password: " + organizationUser.Password);
     }
 
     public virtual async Task<Task<string>> OrganizationUserCreateAsync(OrganizationUser organizationUserProperties, CancellationToken cancellationToken = default)
     {
-        var result = await this.OrganizationUserFindAsync(organizationUserProperties);
+        var result = await this.OrganizationUserFindAsync(organizationUserProperties, cancellationToken);
 
         if (result is not null)
         {
             return Task.FromResult("OrganizationUser already exists");
         }
 
-        await GetCollection<OrganizationUser>(GetDatabaseName()).InsertOneAsync(organizationUserProperties, cancellationToken: cancellationToken);
+        var generateSalt = HashLoader.HashCreate();
+        var HashedPassword = HashLoader.HashCreate(organizationUserProperties.Password, generateSalt);
+        var organizationUser = new OrganizationUser(organizationUserProperties.Name, HashedPassword);
+
+        await GetCollection<OrganizationUser>(GetDatabaseName()).InsertOneAsync(organizationUser, cancellationToken: cancellationToken);
 
         return Task.FromResult("OrganizationUser created");
     }
 
-
     public virtual async Task<Task<string>> OrganizationUserActivateAsync(OrganizationUser organizationUserProperties, CancellationToken cancellationToken = default)
     {
-        var result = await this.OrganizationUserFindAsync(organizationUserProperties);
+        var result = await this.OrganizationUserFindAsync(organizationUserProperties, cancellationToken);
 
         if (result is null)
         {
@@ -59,8 +68,7 @@ public class AccountConsultion : AvisMongoDbContext
 
     public virtual async Task<Task<string>> OrganizationUserDeactivateAsync(OrganizationUser organizationUserProperties, CancellationToken cancellationToken = default)
     {
-        var result = await this.OrganizationUserFindAsync(organizationUserProperties);
-
+        var result = await this.OrganizationUserFindAsync(organizationUserProperties, cancellationToken);
 
         if (result is null)
         {

@@ -20,7 +20,7 @@ public class ProtectDT : IDT<string>
         {
             IterationCount = 150000
         };
-        
+
         aes.Key = rfc2898DeriveBytes.GetBytes(32);
         aes.IV = rfc2898DeriveBytes.GetBytes(16);
 
@@ -29,6 +29,9 @@ public class ProtectDT : IDT<string>
         cryptoStream.Write(GetBytes, 0, GetBytes.Length);
         cryptoStream.FlushFinalBlock();
         cryptoStream.Close();
+
+        aes.Clear();
+        rfc2898DeriveBytes.Reset();
 
         byte[] array = memoryStream.ToArray();
         return await Task.FromResult(Convert.ToBase64String(array));
@@ -46,15 +49,18 @@ public class ProtectDT : IDT<string>
         {
             IterationCount = 150000
         };
-        
+
         aes.Key = rfc2898DeriveBytes.GetBytes(32);
         aes.IV = rfc2898DeriveBytes.GetBytes(16);
- 
+
         using MemoryStream memoryStream = new();
         using CryptoStream cryptoStream = new(memoryStream, aes.CreateDecryptor(), CryptoStreamMode.Write);
         cryptoStream.Write(array, 0, array.Length);
         cryptoStream.FlushFinalBlock();
         cryptoStream.Close();
+
+        aes.Clear();
+        rfc2898DeriveBytes.Reset();
 
         byte[] bytes = memoryStream.ToArray();
         return await Task.FromResult(Encoding.Unicode.GetString(bytes));

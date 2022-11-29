@@ -16,7 +16,7 @@ public class AvisMongoDbContext : IAvisMongoDbContext
         var client = new MongoClient(clientSettings);
         MongoDatabase = client.GetDatabase("");
     }
-    
+
     public virtual IMongoCollection<T> GetCollection<T>(string collectionName)
     {
         return MongoDatabase.GetCollection<T>(collectionName);

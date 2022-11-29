@@ -11,11 +11,16 @@ public class AuthenticateConsultion : AvisMongoDbContext
         this.ProtectDT = protectDT;
     }
 
-    public virtual Task<string> AuthenticateAsync(OrganizationUser organizationUser, CancellationToken cancellationToken = default)
+    public virtual async Task<string> AuthenticateAsync(OrganizationUser organizationUser, CancellationToken cancellationToken = default)
     {
         ValidateAuthentication(organizationUser);
-        
-        return ValidateHashedPassword(organizationUser, cancellationToken);
+
+        if (await CheckStringIsNotBase64Encoded(organizationUser.Name) is not true || await CheckStringIsNotBase64Encoded(organizationUser.Password) is not true)
+        {
+            return Task.FromResult("Text validation is invalid. please contact the producer.").Result;
+        }
+
+        return await ValidateHashedPassword(organizationUser, cancellationToken);
     }
 
     protected virtual async Task<string> ValidateHashedPassword(OrganizationUser organizationUser, CancellationToken cancellationToken)
@@ -28,22 +33,22 @@ public class AuthenticateConsultion : AvisMongoDbContext
             return await Task.FromResult("User not found");
         }
 
-        var validate = await ValidateAuthentication(result.Password, userOrganization);
+        var validate = await ValidateDBAuthentication(result.Password, userOrganization);
         return validate;
     }
 
     protected async virtual Task<OrganizationUser> ValidateDTLayer(OrganizationUser organizationUser, CancellationToken cancellationToken)
     {
         DTPage dTPage = new(await ProtectDT.Decrypt(organizationUser.Name), await ProtectDT.Decrypt(organizationUser.Password));
-        
+
         return await Task.FromResult(new OrganizationUser(dTPage.Name, dTPage.Password));
     }
 
-    protected virtual Task<string> ValidateAuthentication(string dbPassword, OrganizationUser organizationUser)
+    protected virtual Task<string> ValidateDBAuthentication(string dbPassword, OrganizationUser organizationUser)
     {
         var page = new AlgorithmPage(dbPassword);
 
-        if (HashLoader.ValidateHash(organizationUser.Password, page.Value.Split('æ')[1], page.Value.Split('æ')[0]) is false)
+        if (HashLoader.ValidateHash(organizationUser.Password, page.Value.Split('Ã¦')[1], page.Value.Split('Ã¦')[0]) is false)
         {
             return Task.FromResult("Password is incorrect");
         }
@@ -67,5 +72,24 @@ public class AuthenticateConsultion : AvisMongoDbContext
         {
             throw new ArgumentException("Value cannot be null or whitespace.", nameof(organizationUser.Password));
         }
+    }
+
+    protected virtual async Task<bool> CheckStringIsNotBase64Encoded(string input)
+    {
+        if (input.Length % 4 != 0 || input.Contains(" ") || input.Contains("\t") || input.Contains("\r") || input.Contains("\n") || input.Contains("'") || input.Contains("\"") || input.Contains(";") || input.Contains("--") || input.Contains("/*") || input.Contains("*/"))
+        {
+            return await Task.FromResult(false);
+        }
+
+        try
+        {
+            await ProtectDT.Decrypt(input);
+        }
+        catch (Exception)
+        {
+            return await Task.FromResult(false);
+        }
+
+        return await Task.FromResult(true);
     }
 }

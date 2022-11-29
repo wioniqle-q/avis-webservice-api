@@ -54,7 +54,7 @@ public class AccountController : ControllerBase
             Name = organization.Name,
             Password = organization.Password
         });
-        
+
         return Ok(mediator);
     }
 
