@@ -1,8 +1,3 @@
-using Avis.Features.Features.Commands.AuthenticateCommand.Authenticate;
-using Avis.Services.DT.DT.Algorithm;
-using Avis.Services.Protection.HashAlgorithm;
-using System.Reflection;
-
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(options =>
 {
@@ -46,13 +41,19 @@ builder.Services.AddRateLimiter(options =>
     );
 });
 
-builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+var config = new MapperConfiguration(conf =>
+{
+    conf.AddProfile<ObjectClassProfile>();
+});
+
+builder.Services.AddScoped(s => config.CreateMapper());
 builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddSingleton<IAvisMongoDbContext, AvisMongoDbContext>();
 builder.Services.AddSingleton<AccountConsultion>();
 builder.Services.AddSingleton<AuthenticateConsultion>();
 builder.Services.AddSingleton<AuthenticateCommandHandler>();
 builder.Services.AddSingleton<CreateOrganizationCommandHandler>();
+builder.Services.AddSingleton<QueryOrganizationCommandHandler>();
 builder.Services.AddSingleton<ProtectDT>();
 builder.Services.AddMemoryCache();
 builder.Services.AddControllers();

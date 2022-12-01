@@ -1,4 +1,4 @@
-
+﻿
 using MediatR;
 
 namespace Avis.Features.Features.Commands.UserOrganizationCommand.UpdateOrganization;

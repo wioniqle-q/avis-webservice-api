@@ -34,17 +34,23 @@
     <ProjectReference Include="..\Avis.Common\Avis.Common.csproj" />
     <ProjectReference Include="..\Avis.DB\Avis.DB.csproj" />
     <ProjectReference Include="..\Avis.Features\Avis.Features.csproj" />
+    <ProjectReference Include="..\Avis.Services.Contract\Avis.Services.Contract.csproj" />
     <ProjectReference Include="..\Avis.Services.DataConsultion\Avis.Services.DataConsultion.csproj" />
     <ProjectReference Include="..\Avis.Services.DT\Avis.Services.DT.csproj" />
     <ProjectReference Include="..\Avis.Services.SecurityLayer\Avis.Services.SecurityLayer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Using Include="AutoMapper" />
     <Using Include="Avis.API.Controllers.V1" />
     <Using Include="Avis.Common.Middlewares" />
     <Using Include="Avis.DB.MongoDB" />
+    <Using Include="Avis.Features.Features.Commands.AuthenticateCommand.Authenticate" />
     <Using Include="Avis.Features.Features.Commands.UserOrganizationCommand.CreateOrganization" />
+    <Using Include="Avis.Features.Features.Queries.MapQueryOrganization" />
+    <Using Include="Avis.Services.Contract.Mapper" />
     <Using Include="Avis.Services.DataConsultion.Consultion" />
+    <Using Include="Avis.Services.DT.DT.Algorithm" />
     <Using Include="Avis.Services.OrganizationModel" />
     <Using Include="Avis.Services.SecurityLayer.Policies" />
     <Using Include="MediatR" />

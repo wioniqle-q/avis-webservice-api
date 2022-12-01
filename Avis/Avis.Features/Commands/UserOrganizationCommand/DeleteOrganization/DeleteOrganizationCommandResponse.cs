@@ -1,4 +1,4 @@
-namespace Avis.Features.Features.Commands.UserOrganizationCommand.DeleteOrganization;
+﻿namespace Avis.Features.Features.Commands.UserOrganizationCommand.DeleteOrganization;
 
 public record DeleteOrganizationCommandResponse
 {

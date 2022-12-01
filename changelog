@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+### Added 
+- Added AutoMapper for object.
+- Added OrganizationMap.
+
+### Changed
+- CQRS Pattern validation.
+- DatabaseContext increased protected level.
+- AccountConsultion "UpdateUser" function shorted as result.
+- Global implicit variable added for 4 variables.
+
+### Fixed
+- Circular dependency err fixed.
+
+## [1.1.2] - 2022-12-01
+-------------------------------------------------------------------
 ### Added
 - Added new security improvements code.
 

@@ -1,6 +1,7 @@
 ﻿using Avis.Features.Features.Commands.UserOrganizationCommand.ActiveOrganization;
 using Avis.Features.Features.Commands.UserOrganizationCommand.DeleteOrganization;
 using Avis.Features.Features.Commands.UserOrganizationCommand.UpdateOrganization;
+using Avis.Features.Features.Queries.MapQueryOrganization;
 
 namespace Avis.API.Controllers.V1;
 
@@ -68,6 +69,15 @@ public class AccountController : ControllerBase
         {
             Name = organization.Name
         });
+
+        return Ok(mediator);
+    }
+
+    [HttpGet]
+    [Route("map-organization")]
+    public virtual async Task<IActionResult> GetOrganization()
+    {
+        var mediator = await this.mediator.Send(new QueryOrganizationCommandRequest());
 
         return Ok(mediator);
     }

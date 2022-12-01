@@ -1,4 +1,4 @@
-
+﻿
 namespace Avis.Features.Features.Commands.UserOrganizationCommand.ActiveOrganization;
 
 public record ActiveOrganizationCommandResponse

@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Avis.DB\Avis.DB.csproj" />
-    <ProjectReference Include="..\Avis.Services.Contracts\Avis.Services.Contracts.csproj" />
     <ProjectReference Include="..\Avis.Services.DT\Avis.Services.DT.csproj" />
     <ProjectReference Include="..\Avis.Services.OrganizationModel\Avis.Services.OrganizationModel.csproj" />
     <ProjectReference Include="..\Avis.Services.Protection\Avis.Services.Protection.csproj" />

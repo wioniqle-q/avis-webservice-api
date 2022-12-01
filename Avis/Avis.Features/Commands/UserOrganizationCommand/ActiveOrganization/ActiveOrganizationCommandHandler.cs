@@ -1,5 +1,4 @@
-
-using Avis.Services.DataConsultion.Consultion;
+﻿using Avis.Services.DataConsultion.Consultion;
 using Avis.Services.OrganizationModel;
 using MediatR;
 
@@ -17,7 +16,7 @@ public class ActiveOrganizationCommandHandler : IRequestHandler<ActiveOrganizati
     public virtual async Task<ActiveOrganizationCommandResponse> Handle(ActiveOrganizationCommandRequest request, CancellationToken cancellationToken)
     {
         var organization = new OrganizationUser(request.Name, string.Empty);
-        
+
         var organizationUser = await this.accountConsultion.OrganizationUserActivateAsync(organization);
 
         return new ActiveOrganizationCommandResponse() { Result = await organizationUser };

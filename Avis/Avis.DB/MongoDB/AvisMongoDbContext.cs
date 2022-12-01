@@ -6,8 +6,8 @@ namespace Avis.DB.MongoDB;
 public class AvisMongoDbContext : IAvisMongoDbContext
 {
     protected IMongoDatabase MongoDatabase { get; private set; }
-
-    public AvisMongoDbContext()
+    
+    protected AvisMongoDbContext()
     {
         var clientSettings = MongoClientSettings.FromConnectionString("");
         clientSettings.ServerApi = new ServerApi(ServerApiVersion.V1);

@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-
-namespace Avis.Services.DataConsultion.Consultion;
+﻿namespace Avis.Services.DataConsultion.Consultion;
 
 public class AccountConsultion : AvisMongoDbContext
 {
@@ -17,7 +15,7 @@ public class AccountConsultion : AvisMongoDbContext
         {
             return Task.FromResult("OrganizationUser not found");
         }
-
+        
         var generateSalt = HashLoader.HashCreate();
         var HashedPassword = HashLoader.HashCreate(organizationUserProperties.Password, generateSalt);
         var organizationUser = new OrganizationUser(String.Empty, HashedPassword);
@@ -25,7 +23,7 @@ public class AccountConsultion : AvisMongoDbContext
         var newProperty = Builders<OrganizationUser>.Update.Set(x => x.Password, organizationUser.Password);
         await GetCollection<OrganizationUser>(GetDatabaseName()).UpdateOneAsync(x => x.Name == organizationUserProperties.Name, newProperty, cancellationToken: cancellationToken);
 
-        return Task.FromResult("OrganizationUser password updated, new password: " + organizationUser.Password);
+        return Task.FromResult("OrganizationUser password updated");
     }
 
     public virtual async Task<Task<string>> OrganizationUserCreateAsync(OrganizationUser organizationUserProperties, CancellationToken cancellationToken = default)
@@ -84,6 +82,11 @@ public class AccountConsultion : AvisMongoDbContext
         await GetCollection<OrganizationUser>(GetDatabaseName()).UpdateOneAsync(x => x.Name == result.Name, newProperty, cancellationToken: cancellationToken);
 
         return Task.FromResult("OrganizationUser inactived");
+    }
+
+    public virtual async Task<List<OrganizationUser>> OrganizationUserMapAsync(CancellationToken cancellationToken = default)
+    {
+        return await GetCollection<OrganizationUser>(GetDatabaseName()).AsQueryable().OrderBy(x => x.Name).Take(100).ToListAsync(cancellationToken);
     }
 
     protected virtual IMongoQueryable<T> GetMongoQueryable<T>(IQueryable<T> queryable)

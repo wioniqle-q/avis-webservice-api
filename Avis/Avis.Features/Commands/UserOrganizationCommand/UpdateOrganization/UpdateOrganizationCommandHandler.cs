@@ -1,8 +1,7 @@
-
+﻿
 using Avis.Services.DataConsultion.Consultion;
 using Avis.Services.OrganizationModel;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace Avis.Features.Features.Commands.UserOrganizationCommand.UpdateOrganization;
 
