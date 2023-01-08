@@ -18,13 +18,16 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="FluentValidation" Version="11.4.0" />
     <PackageReference Include="MediatR" Version="11.1.0" />
+    <PackageReference Include="MediatR.Extensions.FluentValidation.AspNetCore" Version="4.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="zxcvbn-core" Version="7.0.92" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Avis.Services.DataConsultion\Avis.Services.DataConsultion.csproj" />
-    <ProjectReference Include="..\Avis.Services.OrganizationModel\Avis.Services.OrganizationModel.csproj" />
+    <ProjectReference Include="..\Avis.Services.Models\Avis.Services.Models.csproj" />
   </ItemGroup>
 
 </Project>

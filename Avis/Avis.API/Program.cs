@@ -1,3 +1,11 @@
+using Avis.Features.UserManagement.Auth.Handlers;
+using Avis.Features.UserManagement.Auth.Requests;
+using Avis.Features.UserManagement.Create.Requests;
+using Avis.Features.UserManagement.Handlers;
+using Avis.Services.DataConsultion.Consultion;
+using MediatR.Extensions.FluentValidation.AspNetCore;
+using MediatR.Pipeline;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(options =>
 {
@@ -35,8 +43,8 @@ builder.Services.AddRateLimiter(options =>
         factory: partition => new FixedWindowRateLimiterOptions
         {
             AutoReplenishment = true,
-            PermitLimit = 5,
-            Window = TimeSpan.FromSeconds(10)
+            PermitLimit = 15,
+            Window = TimeSpan.FromSeconds(30)
         })
     );
 });
@@ -46,15 +54,26 @@ var config = new MapperConfiguration(conf =>
     conf.AddProfile<ObjectClassProfile>();
 });
 
+var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetTypes().Any(t => t.GetInterfaces().Any(i => i == typeof(IMediator))));
+foreach (var assembly in assemblies)
+{
+    builder.Services.AddMediatR(assembly);
+}
+builder.Services.AddMediatR(typeof(CreateUserByIdValidator).Assembly);
+builder.Services.AddMediatR(typeof(AuthUserByIdValidator).Assembly);
+
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPostProcessorBehavior<,>));
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestExceptionProcessorBehavior<,>));
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CreateUserPipelineBehavior<,>));
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthUserPipelineBehavior<,>));
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+builder.Services.AddFluentValidation(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped(s => config.CreateMapper());
-builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddSingleton<IAvisMongoDbContext, AvisMongoDbContext>();
-builder.Services.AddSingleton<AccountConsultion>();
-builder.Services.AddSingleton<AuthenticateConsultion>();
-builder.Services.AddSingleton<AuthenticateCommandHandler>();
-builder.Services.AddSingleton<CreateOrganizationCommandHandler>();
-builder.Services.AddSingleton<QueryOrganizationCommandHandler>();
-builder.Services.AddSingleton<ProtectDT>();
+builder.Services.AddSingleton<AuthService>();
+builder.Services.AddSingleton<UserService>();
 builder.Services.AddMemoryCache();
 builder.Services.AddControllers();
 

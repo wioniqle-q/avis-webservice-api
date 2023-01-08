@@ -15,7 +15,7 @@ public abstract class SecurityPolicy
         headerPolicyCollection.AddStrictTransportSecurityMaxAge();
         headerPolicyCollection.AddReferrerPolicyOriginWhenCrossOrigin();
         headerPolicyCollection.RemoveServerHeader();
-        
+
         headerPolicyCollection.AddCrossOriginOpenerPolicy(builder => builder.SameOrigin());
         headerPolicyCollection.AddCrossOriginEmbedderPolicy(builder => builder.RequireCorp());
         headerPolicyCollection.AddCrossOriginResourcePolicy(builder => builder.SameOrigin());

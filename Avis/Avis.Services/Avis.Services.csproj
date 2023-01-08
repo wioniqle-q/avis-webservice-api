@@ -12,7 +12,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Avis.API.Common\Avis.API.Common.csproj" />
     <ProjectReference Include="..\Avis.Services.Contracts\Avis.Services.Contracts.csproj" />
-    <ProjectReference Include="..\Avis.Services.Model\Avis.Services.Model.csproj" />
+    <ProjectReference Include="..\Avis.Services.Models\Avis.Services.Models.csproj" />
+    <ProjectReference Include="..\Avis.Services.DT\Avis.Services.DT.csproj" />
+    <ProjectReference Include="..\Avis.Services.DataConsultion\Avis.Services.DataConsultion.csproj" />
   </ItemGroup>
 
 </Project>

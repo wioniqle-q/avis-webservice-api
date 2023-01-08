@@ -19,7 +19,9 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="MediatR" Version="11.1.0" />
+    <PackageReference Include="MediatR.Extensions.FluentValidation.AspNetCore" Version="4.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Antiforgery" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
@@ -27,17 +29,17 @@
     <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders" Version="0.17.0" />
     <PackageReference Include="NetEscapades.AspNetCore.SecurityHeaders.TagHelpers" Version="0.17.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
+    <PackageReference Include="xunit" Version="2.4.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Avis.API.DataContracts\Avis.API.DataContracts.csproj" />
     <ProjectReference Include="..\Avis.Common\Avis.Common.csproj" />
     <ProjectReference Include="..\Avis.DB\Avis.DB.csproj" />
-    <ProjectReference Include="..\Avis.Features\Avis.Features.csproj" />
     <ProjectReference Include="..\Avis.Services.Contract\Avis.Services.Contract.csproj" />
-    <ProjectReference Include="..\Avis.Services.DataConsultion\Avis.Services.DataConsultion.csproj" />
     <ProjectReference Include="..\Avis.Services.DT\Avis.Services.DT.csproj" />
     <ProjectReference Include="..\Avis.Services.SecurityLayer\Avis.Services.SecurityLayer.csproj" />
+    <ProjectReference Include="..\Avis.Services.DataConsultion\Avis.Services.DataConsultion.csproj" />
+    <ProjectReference Include="..\Avis.Services.Models\Avis.Services.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,13 +47,7 @@
     <Using Include="Avis.API.Controllers.V1" />
     <Using Include="Avis.Common.Middlewares" />
     <Using Include="Avis.DB.MongoDB" />
-    <Using Include="Avis.Features.Features.Commands.AuthenticateCommand.Authenticate" />
-    <Using Include="Avis.Features.Features.Commands.UserOrganizationCommand.CreateOrganization" />
-    <Using Include="Avis.Features.Features.Queries.MapQueryOrganization" />
     <Using Include="Avis.Services.Contract.Mapper" />
-    <Using Include="Avis.Services.DataConsultion.Consultion" />
-    <Using Include="Avis.Services.DT.DT.Algorithm" />
-    <Using Include="Avis.Services.OrganizationModel" />
     <Using Include="Avis.Services.SecurityLayer.Policies" />
     <Using Include="MediatR" />
     <Using Include="Microsoft.AspNetCore.Authentication.JwtBearer" />

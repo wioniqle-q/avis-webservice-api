@@ -2,7 +2,8 @@
 
 namespace Avis.DB.MongoDB;
 
-public interface IAvisMongoDbContext
+public abstract class IAvisMongoDbContext
 {
-    IMongoCollection<T> GetCollection<T>(string collectionName);
+    public abstract IMongoCollection<T> GetCollection<T>(string collectionName);
+    public abstract string GetUserModelDatabaseName();
 }

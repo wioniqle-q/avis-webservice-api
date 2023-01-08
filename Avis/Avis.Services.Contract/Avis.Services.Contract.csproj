@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Avis.Features\Avis.Features.csproj" />
-    <ProjectReference Include="..\Avis.Services.OrganizationModel\Avis.Services.OrganizationModel.csproj" />
   </ItemGroup>
 
 </Project>

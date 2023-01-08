@@ -11,4 +11,9 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Avis.Services.Models\Avis.Services.Models.csproj" />
+    <ProjectReference Include="..\Avis.Tools\Avis.Tools.csproj" />
+  </ItemGroup>
+
 </Project>

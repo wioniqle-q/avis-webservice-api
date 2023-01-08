@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
-using System.Net;
 using Formatting = Newtonsoft.Json.Formatting;
 
 namespace Avis.Common.Middlewares
@@ -29,22 +30,34 @@ namespace Avis.Common.Middlewares
             }
         }
 
-        private Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            var code = HttpStatusCode.InternalServerError;
+            var errorFeature = context.Features.Get<IExceptionHandlerFeature>();
 
-            if (exception is ArgumentNullException) code = HttpStatusCode.BadRequest;
-            else if (exception is ArgumentException) code = HttpStatusCode.BadRequest;
-            else if (exception is UnauthorizedAccessException) code = HttpStatusCode.Unauthorized;
-
-            this._logger.LogError($"GLOBAL ERROR HANDLER::HTTP:{code}::{exception.Message}");
-
-            var result = JsonConvert.SerializeObject(exception, Formatting.Indented);
+            var details =  JsonConvert.SerializeObject(new
+            {
+                Instance = errorFeature switch
+                {
+                    ExceptionHandlerFeature e => e.Path,
+                    _ => "unknown"
+                },
+                Status = StatusCodes.Status400BadRequest,
+                error = new
+                {
+                    message = exception.Message,
+                    exception = exception.GetType().Name
+                }
+            });
 
             context.Response.Clear();
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)code;
-            return context.Response.WriteAsync(result);
+            context.Response.ContentType = "application/problem+json";
+            context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue()
+            {
+                NoCache = true,
+            };
+
+            this._logger.LogError($"GLOBAL ERROR HANDLER::HTTP:{context.Response.StatusCode}::{exception.Message}");
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(details, Formatting.Indented));
         }
     }
 }

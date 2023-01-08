@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
@@ -8,7 +6,7 @@ namespace Avis.Common.Middlewares
 {
     public class BodyHandlerActions
     {
-        private const int MaxJsonBodySize = 1024 * 1024 * 10; // 10MB
+        private const int MaxJsonBodySize = 1024 * 1024 * 1; // 1MB 
 
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
