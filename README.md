@@ -1,7 +1,5 @@
 # 🚧 Avis Webservice API
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/Noirrs/getStructure/tree/circleci-project-setup.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/Noirrs/getStructure/tree/circleci-project-setup)
-
 ### 🌀 Avis Webservice is a powerfull API where you can find everything that you search made with ASP.NET
 
  Still on the proccess, if you want announce a problem, you can create an issue on Github
@@ -83,12 +81,9 @@ $ dotnet run
 
 <div align="center">
 <a href="https://github.com/wioniqle-q" target="_blank"><img src="https://img.shields.io/badge/wioniqle-backend developer%20-191717.svg?&style=for-the-badge&logo=github&logoColor=white"></a>
-<a href="https://github.com/Noirrs" target="_blank"><img src="https://img.shields.io/badge/Noirrs-backend developer%20-191717.svg?&style=for-the-badge&logo=github&logoColor=white"></a>
 </div>
 <div align="center">
 <a href="https://discord.com/users/790018895847096380" target="_blank"><img src="https://shields.io/badge/Wioniqle-111111.svg?&style=for-the-badge&logo=discord"></a>
-<a href="https://discord.com/users/922078187788308510" target="_blank"><img src="https://shields.io/badge/Noir-111111.svg?&style=for-the-badge&logo=discord"></a>
-  </div>
 
 
 
