@@ -1,16 +1,18 @@
+using Avis.DB.Configurations;
+using Avis.DB.Contexts;
 using Avis.Services.DataConsultion.Consultion.Response;
 using Avis.Services.DT.TransferObjects;
 using Avis.Services.Models;
 
 namespace Avis.Services.DataConsultion.Consultion;
 
-public class AuthService : AvisMongoDbContext
+public class AuthService : MongoDbContext
 {
-    private UserService @userService { get; }
+    private readonly UserService userService;
 
-    public AuthService(UserService userService)
+    public AuthService(MongoDbConfigurations configurations) : base(configurations)
     {
-        this.userService = userService;
+        this.userService = new UserService(configurations);
     }
 
     public virtual async Task<AuthServiceResponse> AuthenticateUserAsync(DerivedUserVirtualClass userModel, CancellationToken cancellationToken = default)

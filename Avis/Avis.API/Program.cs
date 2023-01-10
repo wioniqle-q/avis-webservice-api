@@ -1,3 +1,7 @@
+using Avis.DB.Configurations;
+using Avis.DB.Interfaces;
+using Avis.DB.Modules;
+using Avis.DB.Options;
 using Avis.Features.UserManagement.Auth.Handlers;
 using Avis.Features.UserManagement.Auth.Requests;
 using Avis.Features.UserManagement.Create.Requests;
@@ -55,10 +59,13 @@ var config = new MapperConfiguration(conf =>
 });
 
 var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetTypes().Any(t => t.GetInterfaces().Any(i => i == typeof(IMediator))));
+
 foreach (var assembly in assemblies)
 {
+    Console.WriteLine(assembly);
     builder.Services.AddMediatR(assembly);
 }
+builder.Services.AddMediatR(typeof(Program).Assembly);
 builder.Services.AddMediatR(typeof(CreateUserByIdValidator).Assembly);
 builder.Services.AddMediatR(typeof(AuthUserByIdValidator).Assembly);
 
@@ -71,7 +78,17 @@ builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBeh
 
 builder.Services.AddFluentValidation(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped(s => config.CreateMapper());
-builder.Services.AddSingleton<IAvisMongoDbContext, AvisMongoDbContext>();
+builder.Services.AddSingleton<IMongoDbModule, MongoDbModule>(conf => {
+    var mongoDbModule = new MongoDbModule();
+    mongoDbModule.ConfigureServices(builder.Services);
+    return mongoDbModule;
+});
+builder.Services.Configure<MongoDbOptions>(options => {
+    options.ConnectionString = builder.Configuration.GetSection("MongoDbOptions:ConnectionString").Value;
+    options.DatabaseName = builder.Configuration.GetSection("MongoDbOptions:DatabaseName").Value;
+    options.UserModelDatabaseName = builder.Configuration.GetSection("MongoDbOptions:UserModelDatabaseName").Value;
+});
+builder.Services.AddSingleton<MongoDbConfigurations>();
 builder.Services.AddSingleton<AuthService>();
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddMemoryCache();

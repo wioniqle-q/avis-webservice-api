@@ -17,7 +17,7 @@ enum ArgonEncryptorEnums
     Iterations = 4
 }
 
-public static class ArgonEncryptor
+public sealed class ArgonEncryptor
 {
     public static string ArgonHashPassword(string password, string salt)
     {

@@ -1,9 +1,15 @@
+using Avis.DB.Configurations;
+using Avis.DB.Contexts;
 using Avis.Services.Models;
 
 namespace Avis.Services.DataConsultion.Consultion;
 
-public class UserService : AvisMongoDbContext
+public class UserService : MongoDbContext
 {
+    public UserService(MongoDbConfigurations configurations) : base(configurations)
+    {
+
+    }
 
     public virtual async Task<DerivedUserVirtualClass> FindUserModelAsync(DerivedUserVirtualClass userModel, CancellationToken cancellationToken = default)
     {

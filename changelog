@@ -3,7 +3,11 @@
 All notable changes to this project will be documented in this file.
 
 ## [Released]
+### Changed
+- the database production complately was changed.
 
+## [1.1.4] - 2023-08-10
+-------------------------------------------------------------------
 ### Changed
 - the entire project configuration was changed.
 
